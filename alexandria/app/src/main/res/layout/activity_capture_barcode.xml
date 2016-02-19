@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <SurfaceView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/camera_view"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:indeterminate="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/scanProgressBar"
+        android:layout_gravity="bottom"
+        android:padding="10dp"
+        android:background="@color/colorPrimary"
+        android:layout_weight="1"
+        android:layout_above="@+id/barCodeScannerText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Scanning . . ."
+        android:id="@+id/barCodeScannerText"
+        android:gravity="center"
+        android:textColor="@color/colorAccent"
+        android:background="@color/colorPrimary"
+        android:layout_weight="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

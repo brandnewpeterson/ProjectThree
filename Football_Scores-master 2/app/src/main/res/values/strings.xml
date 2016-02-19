@@ -39,5 +39,72 @@
     <!-- Content Descriptors -->
     <string name="share_button_content">"Share Match via Other Apps"</string>
 
+    <!-- Utilities Strings -->
+    <!-- Leagues (API allows query for these, so regularly refreshing them to SharedPrefs might be a better approach to hardcoding them.) -->
+
+    <string-array name="leagues_codes">
+        <item>357</item>
+        <item>354</item>
+        <item>362</item>
+        <item>358</item>
+        <item>351</item>
+    </string-array>
+
+    <string-array name="leagues_names">
+        <item>Seria A</item>
+        <item>Premier League</item>
+        <item>UEFA Champions League</item>
+        <item>Primera Division</item>
+        <item>Bundesliga1</item>
+    </string-array>
+
+    <string name="no_league_name_error">No matching league found. Report number </string>
+
+    <!-- Fetch Service Strings -->
+
+    <string-array name="fetch_leagues_codes">
+        <item>394</item>
+        <item>395</item>
+        <item>396</item>
+        <item>397</item>
+        <item>398</item>
+        <item>399</item>
+        <item>400</item>
+        <item>401</item>
+        <item>402</item>
+        <item>403</item>
+        <item>404</item>
+    </string-array>
+
+    <string-array name="fetch_leagues_names">
+        <item>BUNDESLIGA1</item>
+        <item>BUNDESLIGA2</item>
+        <item>LIGUE1</item>
+        <item>LIGUE2</item>
+        <item>PREMIER_LEAGUE</item>
+        <item>PRIMERA_DIVISION</item>
+        <item>SEGUNDA_DIVISION</item>
+        <item>SERIE_A</item>
+        <item>PRIMERA_LIGA</item>
+        <item>Bundesliga3</item>
+        <item>EREDIVISIE</item>
+    </string-array>
+
+    <string name="SEASON_LINK">http://api.football-data.org/alpha/soccerseasons/</string>
+    <string name="MATCH_LINK">http://api.football-data.org/alpha/fixtures/</string>
+    <string name="FIXTURES">fixtures</string>
+    <string name="LINKS">_links</string>
+    <string name="SOCCER_SEASON">soccerseason</string>
+    <string name="SELF">self</string>
+    <string name="MATCH_DATE">date</string>
+    <string name="HOME_TEAM">homeTeamName</string>
+    <string name="AWAY_TEAM">awayTeamName</string>
+    <string name="RESULT">result</string>
+    <string name="HOME_GOALS">goalsHomeTeam</string>
+    <string name="AWAY_GOALS">goalsAwayTeam</string>
+    <string name="MATCH_DAY">matchday</string>
+    <string name="HOME_LINK">homeTeam</string>
+    <string name="HREF">href</string>
+    <string name="AWAY_LINK">awayTeam</string>
 
 </resources>

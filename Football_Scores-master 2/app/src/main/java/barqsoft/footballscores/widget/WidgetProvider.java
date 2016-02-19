@@ -25,10 +25,10 @@ public class WidgetProvider extends AppWidgetProvider {
 
         //System.out.println("Intent received: " + intent.getAction());
 
-        if (intent.getAction() != null) {
-            if (intent.getExtras() != null) {
+        if (intent != null) {
+            if (intent.hasExtra(EXTRA_STRING)){
                 String item = intent.getExtras().getString(EXTRA_STRING);
-                Toast.makeText(context, item, Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, item, Toast.LENGTH_LONG).show();
             }
         }
     }

@@ -18,6 +18,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.TimeZone;
 import java.util.Vector;
@@ -136,37 +137,7 @@ public class myFetchService extends IntentService
         //JSON data
         // This set of league codes is for the 2015/2016 season. In fall of 2016, they will need to
         // be updated. Feel free to use the codes
-        final String BUNDESLIGA1 = "394";
-        final String BUNDESLIGA2 = "395";
-        final String LIGUE1 = "396";
-        final String LIGUE2 = "397";
-        final String PREMIER_LEAGUE = "398";
-        final String PRIMERA_DIVISION = "399";
-        final String SEGUNDA_DIVISION = "400";
-        final String SERIE_A = "401";
-        final String PRIMERA_LIGA = "402";
-        final String Bundesliga3 = "403";
-        final String EREDIVISIE = "404";
 
-
-        final String SEASON_LINK = "http://api.football-data.org/alpha/soccerseasons/";
-        final String MATCH_LINK = "http://api.football-data.org/alpha/fixtures/";
-        final String FIXTURES = "fixtures";
-        final String LINKS = "_links";
-        final String SOCCER_SEASON = "soccerseason";
-        final String SELF = "self";
-        final String MATCH_DATE = "date";
-        final String HOME_TEAM = "homeTeamName";
-        final String AWAY_TEAM = "awayTeamName";
-        final String RESULT = "result";
-        final String HOME_GOALS = "goalsHomeTeam";
-        final String AWAY_GOALS = "goalsAwayTeam";
-        final String MATCH_DAY = "matchday";
-        final String HOME_LINK = "homeTeam";
-        final String HREF = "href";
-        final String AWAY_LINK = "awayTeam";
-        final String HOME_ID = "homeTeamId";
-        final String AWAY_ID = "awayTeamId";
 
         //Match data
         String League = null;
@@ -185,7 +156,7 @@ public class myFetchService extends IntentService
 
 
         try {
-            JSONArray matches = new JSONObject(JSONdata).getJSONArray(FIXTURES);
+            JSONArray matches = new JSONObject(JSONdata).getJSONArray(mContext.getResources().getString(R.string.FIXTURES));
 
 
             //ContentValues to be inserted
@@ -196,34 +167,32 @@ public class myFetchService extends IntentService
                 JSONObject match_data = matches.getJSONObject(i);
                 //System.out.println("match: " + match_data.toString());
 
-                League = match_data.getJSONObject(LINKS).getJSONObject(SOCCER_SEASON).
+                League = match_data.getJSONObject(mContext.getResources()
+                        .getString(R.string.LINKS)).getJSONObject(mContext.getResources().getString(R.string.SOCCER_SEASON)).
                         getString("href");
-                League = League.replace(SEASON_LINK,"");
+                League = League.replace(mContext.getResources().getString(R.string.SEASON_LINK),"");
+
+                String[] leagueNames = mContext.getResources().getStringArray(R.array.fetch_leagues_codes);
                 //This if statement controls which leagues we're interested in the data from.
                 //add leagues here in order to have them be added to the DB.
                 // If you are finding no data in the app, check that this contains all the leagues.
+
+                //Edit this list via the strings.xml array.
+
                 // If it doesn't, that can cause an empty DB, bypassing the dummy data routine.
-                if(     League.equals(PREMIER_LEAGUE)      ||//Get all of them so we get more matches shown.
-                        League.equals(LIGUE1)              ||
-                        League.equals(LIGUE2)              ||
-                        League.equals(SERIE_A)             ||
-                        League.equals(BUNDESLIGA1)         ||
-                        League.equals(BUNDESLIGA2)         ||
-                        League.equals(SEGUNDA_DIVISION)    ||
-                        League.equals(PRIMERA_LIGA)        ||
-                        League.equals(Bundesliga3)         ||
-                        League.equals(EREDIVISIE)          ||
-                        League.equals(PRIMERA_DIVISION)     )
+
+                if(Arrays.asList(leagueNames).contains(League))
                 {
-                    match_id = match_data.getJSONObject(LINKS).getJSONObject(SELF).
-                            getString("href");
-                    match_id = match_id.replace(MATCH_LINK, "");
+                    match_id = match_data.getJSONObject(mContext.getResources().getString(R.string.LINKS))
+                            .getJSONObject(mContext.getResources().getString(R.string.SELF)).
+                                    getString("href");
+                    match_id = match_id.replace(mContext.getResources().getString(R.string.MATCH_LINK), "");
                     if(!isReal){
                         //This if statement changes the match ID of the dummy data so that it all goes into the database
                         match_id=match_id+Integer.toString(i);
                     }
 
-                    mDate = match_data.getString(MATCH_DATE);
+                    mDate = match_data.getString(mContext.getResources().getString(R.string.MATCH_DATE));
                     mTime = mDate.substring(mDate.indexOf("T") + 1, mDate.indexOf("Z"));
                     mDate = mDate.substring(0, mDate.indexOf("T"));
                     SimpleDateFormat match_date = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss");
@@ -248,15 +217,21 @@ public class myFetchService extends IntentService
                         Log.d(LOG_TAG, "error here!");
                         Log.e(LOG_TAG,e.getMessage());
                     }
-                    Home = match_data.getString(HOME_TEAM);
-                    Away = match_data.getString(AWAY_TEAM);
-                    home_href = match_data.getJSONObject(LINKS).getJSONObject(HOME_LINK).getString(HREF);
+                    Home = match_data.getString(mContext.getResources().getString(R.string.HOME_TEAM));
+                    Away = match_data.getString(mContext.getResources().getString(R.string.AWAY_TEAM));
+                    home_href = match_data.getJSONObject(mContext.getResources().getString(R.string.LINKS))
+                            .getJSONObject(mContext.getResources().getString(R.string.HOME_LINK))
+                            .getString(mContext.getResources().getString(R.string.HREF));
                     home_id = home_href.substring(home_href.lastIndexOf("/") + 1);
-                    away_href = match_data.getJSONObject(LINKS).getJSONObject(AWAY_LINK).getString(HREF);
+                    away_href = match_data.getJSONObject(mContext.getResources().getString(R.string.LINKS))
+                            .getJSONObject(mContext.getResources().getString(R.string.AWAY_LINK))
+                            .getString(mContext.getResources().getString(R.string.HREF));
                     away_id = away_href.substring(away_href.lastIndexOf("/") + 1);
-                    Home_goals = match_data.getJSONObject(RESULT).getString(HOME_GOALS);
-                    Away_goals = match_data.getJSONObject(RESULT).getString(AWAY_GOALS);
-                    match_day = match_data.getString(MATCH_DAY);
+                    Home_goals = match_data.getJSONObject(mContext.getResources().getString(R.string.RESULT))
+                            .getString(mContext.getResources().getString(R.string.HOME_GOALS));
+                    Away_goals = match_data.getJSONObject(mContext.getResources().getString(R.string.RESULT))
+                            .getString(mContext.getResources().getString(R.string.AWAY_GOALS));
+                    match_day = match_data.getString(mContext.getResources().getString(R.string.MATCH_DAY));
                     ContentValues match_values = new ContentValues();
                     match_values.put(DatabaseContract.scores_table.MATCH_ID,match_id);
                     match_values.put(DatabaseContract.scores_table.DATE_COL,mDate);
